@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Notes</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="view_all_notes">View all notes</string>
+    <string name="add_new">Add new note</string>
+    <string name="save">Save</string>
+
+</resources>
