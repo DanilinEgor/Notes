@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.etsy.android.grid.StaggeredGridView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,24 +25,36 @@ public class AllNotesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridView);
         HelperInterface helper = new Helper(getActivity());
-        List<String> numbers = helper.load();
-        numbers.add("1");
-        numbers.add("2222222222222222222222222222222222222222222222222222222222222222222222");
-        numbers.add("3");
-        numbers.add("4");
-        numbers.add("5");
-        
+        List<Note> numbers = new ArrayList<>();
+        Note note;
+        note = new Note("1");
+        note.save();
+        numbers.add(note);
+        note = new Note("2222222222222222222222222222222222222222222222222222222222222222222222");
+        note.save();
+        numbers.add(note);
+        note = new Note("3");
+        note.save();
+        numbers.add(note);
+        note = new Note("4");
+        note.save();
+        numbers.add(note);
+        note = new Note("5");
+        note.save();
+        numbers.add(note);
+
         gridView.setAdapter(new ImageAdapter(getActivity(), numbers));
         return rootView;
     }
 
     class ImageAdapter extends BaseAdapter {
         private Context context;
-        private List<String> texts;
+        private List<String> texts = new ArrayList<>();
 
-        public ImageAdapter(Context context, List<String> texts) {
+        public ImageAdapter(Context context, List<Note> texts) {
             this.context = context;
-            this.texts = texts;
+            for (Note note : texts)
+                this.texts.add(note.text);
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {

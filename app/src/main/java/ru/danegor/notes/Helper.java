@@ -20,13 +20,13 @@ public class Helper implements HelperInterface {
     }
 
     @Override
-    public void save(List<String> texts) {
+    public void save(List<Note> texts) {
         PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString(TEXTS, new Gson().toJson(texts)).commit();
     }
 
     @Override
-    public List<String> load() {
-        return new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(mContext).getString(TEXTS, "[]"), new TypeToken<List<String>>() {
+    public List<Note> load() {
+        return new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(mContext).getString(TEXTS, "[]"), new TypeToken<List<Note>>() {
         }.getType());
     }
 }
