@@ -6,15 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity
@@ -28,6 +19,7 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        findViewById(R.id.note_title).setVisibility(View.GONE);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -47,11 +39,24 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        Toast.makeText(this, position + "", Toast.LENGTH_SHORT).show();
-        // update the main content by replacing fragments
+        switch (position) {
+            case 0:
+                setFragment(new AllNotesFragment());
+                break;
+            case 1:
+                setFragment(new EditorFragment());
+                break;
+            case 2:
+                break;
+        }
+
+    }
+
+    public void setFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, new AllNotesFragment())
+                .addToBackStack(null)
+                .replace(R.id.container, fragment)
                 .commit();
     }
 

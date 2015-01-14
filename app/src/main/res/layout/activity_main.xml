@@ -11,11 +11,46 @@
         android:layout_height="wrap_content"
         app:theme="@style/ToolbarTheme">
 
-        <!--<EditText-->
-        <!--android:id="@+id/editText"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:maxWidth="150dp" />-->
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:id="@+id/note_title"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/ok"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:padding="15dp"-->
+                <!--android:src="@drawable/white_ok"-->
+                <!--android:layout_width="?android:actionBarSize"-->
+                <!--android:layout_height="?android:actionBarSize" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/note_title_tv"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="16sp"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:maxWidth="150dp"-->
+                <!--android:layout_marginRight="?android:actionBarSize"-->
+                <!--android:layout_marginEnd="?android:actionBarSize"-->
+                <!--android:text="@string/no_name" />-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/note_title_et"-->
+                <!--android:text="@string/no_name"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="16sp"-->
+                <!--android:layout_marginRight="?android:actionBarSize"-->
+                <!--android:layout_marginEnd="?android:actionBarSize"-->
+                <!--android:maxWidth="150dp" />-->
+
+
+        <!--</RelativeLayout>-->
+
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.DrawerLayout

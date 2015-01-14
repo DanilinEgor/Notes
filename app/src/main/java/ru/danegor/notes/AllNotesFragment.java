@@ -8,9 +8,11 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.activeandroid.query.Select;
 import com.etsy.android.grid.StaggeredGridView;
 
 import java.util.ArrayList;
@@ -24,40 +26,33 @@ public class AllNotesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridView);
-        HelperInterface helper = new Helper(getActivity());
-        List<Note> numbers = new ArrayList<>();
-        Note note;
-        note = new Note("1");
-        note.save();
-        numbers.add(note);
-        note = new Note("2222222222222222222222222222222222222222222222222222222222222222222222");
-        note.save();
-        numbers.add(note);
-        note = new Note("3");
-        note.save();
-        numbers.add(note);
-        note = new Note("4");
-        note.save();
-        numbers.add(note);
-        note = new Note("5");
-        note.save();
-        numbers.add(note);
-
-        gridView.setAdapter(new ImageAdapter(getActivity(), numbers));
+        final List<Note> numbers = new Select().from(Note.class).execute();
+        gridView.setAdapter(new NotesAdapter(getActivity(), numbers));
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Note note = numbers.get(position);
+                Fragment fragment = new EditorFragment();
+                Bundle extras = new Bundle();
+                extras.putLong("id", note.getId());
+                fragment.setArguments(extras);
+                ((MainActivity) getActivity()).setFragment(fragment);
+            }
+        });
         return rootView;
     }
 
-    class ImageAdapter extends BaseAdapter {
+    class NotesAdapter extends BaseAdapter {
         private Context context;
         private List<String> texts = new ArrayList<>();
 
-        public ImageAdapter(Context context, List<Note> texts) {
+        public NotesAdapter(Context context, List<Note> texts) {
             this.context = context;
             for (Note note : texts)
                 this.texts.add(note.text);
         }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
                 LayoutInflater inflater = ((Activity) context).getLayoutInflater();
@@ -67,11 +62,6 @@ public class AllNotesFragment extends Fragment {
                 viewHolder.text = (TextView) convertView.findViewById(R.id.card_textView);
                 viewHolder.card = (CardView) convertView.findViewById(R.id.cardView);
 
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    }
-                });
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
