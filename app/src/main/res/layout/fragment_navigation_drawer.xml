@@ -1,9 +1,41 @@
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:choiceMode="singleChoice"
-    android:divider="@android:color/transparent"
-    android:dividerHeight="0dp"
     android:background="@color/navigationDrawerBackground"
-    tools:context=".NavigationDrawerFragment" />
+    tools:context=".NavigationDrawerFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:padding="16dp"
+            android:id="@+id/all_notes"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/white_grid"
+            android:contentDescription="@string/all_notes" />
+
+        <ImageView
+            android:padding="16dp"
+            android:adjustViewBounds="true"
+            android:id="@+id/new_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/white_plus"
+            android:contentDescription="@string/new_note" />
+
+        <ImageView
+            android:padding="16dp"
+            android:adjustViewBounds="true"
+            android:id="@+id/save_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/white_save"
+            android:contentDescription="@string/save_note" />
+    </LinearLayout>
+</ScrollView>
+

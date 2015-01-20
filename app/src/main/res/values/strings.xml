@@ -11,5 +11,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="save_changes">Save changes?</string>
+    <string name="all_notes">All notes</string>
+    <string name="new_note">New note</string>
+    <string name="save_note">Save note</string>
 
 </resources>

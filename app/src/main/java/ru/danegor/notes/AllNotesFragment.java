@@ -25,6 +25,7 @@ public class AllNotesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        ((MainActivity)getActivity()).hideSaveButton();
         StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridView);
         final List<Note> numbers = new Select().from(Note.class).execute();
         gridView.setAdapter(new NotesAdapter(getActivity(), numbers));

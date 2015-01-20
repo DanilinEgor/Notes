@@ -2,18 +2,18 @@ package ru.danegor.notes;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-
     private Toolbar mToolbar;
+    private DrawerLayout mDrawerLayout;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,28 +33,47 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.container, (DrawerLayout) findViewById(R.id.drawer_layout));
+        mDrawerLayout = ((DrawerLayout) findViewById(R.id.drawer_layout));
+
+        mNavigationDrawerFragment.setUp(R.id.container, mDrawerLayout);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new AllNotesFragment())
+                .commit();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+        mDrawerLayout.closeDrawers();
         switch (position) {
-            case 0:
+            case 0: {
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+                if (fragment instanceof EditorFragment) {
+                    ((EditorFragment) fragment).offerSave();
+                } else {
+                    super.onBackPressed();
+                }
                 setFragment(new AllNotesFragment());
                 break;
+            }
             case 1:
                 setFragment(new EditorFragment());
                 break;
-            case 2:
+            case 2: {
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+                if (fragment instanceof EditorFragment) {
+                    ((EditorFragment) fragment).save();
+                } else {
+                    super.onBackPressed();
+                }
                 break;
+            }
         }
 
     }
 
     public void setFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .addToBackStack(null)
                 .replace(R.id.container, fragment)
                 .commit();
@@ -62,5 +81,31 @@ public class MainActivity extends ActionBarActivity
 
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
+            mDrawerLayout.closeDrawers();
+        } else {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+            if (fragment instanceof EditorFragment) {
+                ((EditorFragment) fragment).onBackPressed();
+            } else {
+                super.onBackPressed();
+            }
+        }
+    }
+
+    public void pressBack() {
+        super.onBackPressed();
+    }
+
+    public void hideSaveButton() {
+        mNavigationDrawerFragment.setSaveButtonVisible(false);
+    }
+
+    public void showSaveButton() {
+        mNavigationDrawerFragment.setSaveButtonVisible(true);
     }
 }
